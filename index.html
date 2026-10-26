@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daisy Clothing Boutique</title>
+<meta name="description" content="Daisy Clothing Boutique, women's clothing and accessories on Main Street in St. Helena, Napa Valley. Shop online or visit us in store.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f7f4ec;
+    --surface:#ffffff;
+    --surface-2:#fbf9f2;
+    --ink:#2a2a26;
+    --muted:#6c675d;
+    --accent:#5e9a3d;
+    --accent-dark:#487a2e;
+    --accent-soft:#eaf3e1;
+    --gold:#b0892c;
+    --line:#e7e1d4;
+    --shadow:0 12px 34px rgba(42,42,38,.09);
+    --shadow-sm:0 4px 14px rgba(42,42,38,.07);
+    --radius:16px;
+    --radius-sm:10px;
+    --maxw:1160px;
+    --serif:"Playfair Display",Georgia,serif;
+    --sans:"Nunito Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:var(--bg);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none}
+  img,svg{display:block;max-width:100%}
+  h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;color:var(--ink)}
+  .wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 20px}
+  .accent{color:var(--accent-dark)}
+  .eyebrow{
+    font-family:var(--sans);
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.16em;
+    font-size:.72rem;
+    color:var(--accent-dark);
+  }
+
+  /* Daisy mark */
+  .daisy{width:42px;height:42px;flex:0 0 auto}
+  .daisy circle.bg{fill:var(--accent)}
+  .daisy path.petal{fill:#ffffff}
+  .daisy circle.core{fill:#f3d24e}
+
+  /* Top utility bar */
+  .utility{
+    background:var(--ink);
+    color:#f3efe6;
+    font-size:.82rem;
+    font-weight:600;
+  }
+  .utility .wrap{
+    display:flex;gap:18px;align-items:center;justify-content:center;flex-wrap:wrap;
+    padding:8px 20px;text-align:center;
+  }
+  .utility a{display:inline-flex;align-items:center;gap:7px;color:#f3efe6}
+  .utility a:hover{color:#ffffff}
+  .utility .dot{opacity:.4}
+  .utility svg{width:15px;height:15px;stroke:#cfe3bd;fill:none;stroke-width:1.8}
+
+  /* Header / nav */
+  header.site{
+    position:sticky;top:0;z-index:40;
+    background:rgba(247,244,236,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 20px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .name{font-family:var(--serif);font-size:1.28rem;font-weight:700;letter-spacing:.01em}
+  .brand .sub{display:block;font-family:var(--sans);font-size:.62rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+  .nav-links{display:flex;align-items:center;gap:30px}
+  .nav-links a{font-weight:700;font-size:.92rem;color:var(--ink);position:relative;padding:4px 0}
+  .nav-links a::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--accent);transition:right .25s ease}
+  .nav-links a:hover::after{right:0}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-family:var(--sans);font-weight:800;font-size:.92rem;
+    padding:12px 22px;border-radius:999px;cursor:pointer;border:2px solid transparent;
+    transition:transform .15s ease,box-shadow .2s ease,background .2s ease,color .2s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--accent);color:#fff;box-shadow:0 8px 20px rgba(94,154,61,.28)}
+  .btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px)}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+  .btn-ghost:hover{background:var(--ink);color:#fff;transform:translateY(-2px)}
+  .btn-gold{background:var(--gold);color:#fff}
+  .btn-gold:hover{filter:brightness(.94);transform:translateY(-2px)}
+
+  /* Mobile menu (CSS only) */
+  #nav-toggle{display:none}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;border:0;background:transparent}
+  .hamburger span{width:24px;height:2px;background:var(--ink);border-radius:2px;transition:.25s}
+
+  /* Promo strip */
+  .promo{background:var(--accent-soft);color:var(--accent-dark);text-align:center;font-weight:700;font-size:.9rem}
+  .promo .wrap{padding:11px 20px}
+  .promo code{font-family:var(--sans);background:#fff;border:1px dashed var(--accent);padding:1px 9px;border-radius:6px;letter-spacing:.06em;font-weight:800}
+
+  /* Hero */
+  .hero{position:relative;overflow:hidden;background:
+      radial-gradient(circle at 18% 22%,rgba(94,154,61,.14),transparent 42%),
+      radial-gradient(circle at 85% 80%,rgba(176,137,44,.12),transparent 46%),
+      var(--surface-2);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:74px 20px 80px}
+  .hero h1{font-size:clamp(2.5rem,5.2vw,4rem);letter-spacing:-.01em}
+  .hero h1 em{font-style:italic;color:var(--accent-dark)}
+  .hero p.lead{font-size:1.12rem;color:var(--muted);margin:22px 0 10px;max-width:33ch}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .hero .fineprint{margin-top:18px;font-size:.86rem;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:8px}
+  .hero .fineprint .daisy{width:20px;height:20px}
+
+  /* Hero visual (CSS/SVG only, no external images) */
+  .hero-art{position:relative;height:420px;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);
+    background:linear-gradient(145deg,#6aa84a,#4a7d2f);
+  }
+  .hero-art .grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:8px;padding:8px}
+  .hero-art .tile{border-radius:12px;background:rgba(255,255,255,.14)}
+  .hero-art .tile:nth-child(odd){background:rgba(255,255,255,.22)}
+  .hero-art .tile.g{background:linear-gradient(160deg,rgba(255,255,255,.28),rgba(255,255,255,.08))}
+  .hero-art .badge{
+    position:absolute;inset:0;margin:auto;width:168px;height:168px;border-radius:50%;
+    background:var(--accent);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 18px 40px rgba(0,0,0,.28);border:6px solid #fff;
+  }
+  .hero-art .badge .daisy{width:150px;height:150px}
+
+  /* Section rhythm */
+  section{padding:74px 0}
+  .section-head{max-width:620px;margin:0 auto 46px;text-align:center}
+  .section-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem);margin-top:12px}
+  .section-head p{color:var(--muted);margin-top:14px;font-size:1.04rem}
+
+  /* About */
+  .about{background:var(--surface)}
+  .about .grid{display:grid;grid-template-columns:1fr 1fr;gap:54px;align-items:center}
+  .about h2{font-size:clamp(1.9rem,3.6vw,2.6rem)}
+  .about p{color:var(--muted);margin-top:18px;font-size:1.06rem}
+  .about .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+  .about .stat{flex:1 1 150px;background:var(--surface-2);border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 20px}
+  .about .stat b{display:block;font-family:var(--serif);font-size:1.5rem;color:var(--accent-dark)}
+  .about .stat span{font-size:.86rem;color:var(--muted);font-weight:700}
+  .about-art{height:380px;border-radius:24px;box-shadow:var(--shadow);position:relative;overflow:hidden;
+    background:linear-gradient(135deg,#f0ead9,#e4edd8);border:1px solid var(--line)}
+  .about-art .ring{position:absolute;border-radius:50%;border:2px solid rgba(94,154,61,.35)}
+  .about-art .r1{width:260px;height:260px;top:-60px;right:-60px}
+  .about-art .r2{width:180px;height:180px;bottom:-40px;left:-30px;border-color:rgba(176,137,44,.4)}
+  .about-art .center{position:absolute;inset:0;margin:auto;width:150px;height:150px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+  .about-art .center .daisy{width:120px;height:120px}
+
+  /* Categories */
+  .cats{background:var(--surface-2)}
+  .cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+  .cat{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);transition:transform .2s ease,box-shadow .2s ease}
+  .cat:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .cat .thumb{height:158px;display:flex;align-items:center;justify-content:center;color:#fff}
+  .cat .thumb svg{width:52px;height:52px;stroke:#fff;fill:none;stroke-width:1.6;opacity:.95}
+  .cat .c1{background:linear-gradient(140deg,#6aa84a,#487a2e)}
+  .cat .c2{background:linear-gradient(140deg,#c7a24a,#9c7a24)}
+  .cat .c3{background:linear-gradient(140deg,#7fa98f,#4f7d64)}
+  .cat .c4{background:linear-gradient(140deg,#b98a86,#8f5d59)}
+  .cat .c5{background:linear-gradient(140deg,#8a9ec2,#5a6f97)}
+  .cat .c6{background:linear-gradient(140deg,#a0894a,#6f5d24)}
+  .cat .body{padding:18px 20px 22px}
+  .cat h3{font-size:1.18rem}
+  .cat p{color:var(--muted);font-size:.92rem;margin-top:6px}
+
+  /* Brands */
+  .brands{background:var(--surface)}
+  .brand-wall{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;max-width:820px;margin:0 auto}
+  .chip{border:1px solid var(--line);background:var(--surface-2);border-radius:999px;padding:12px 24px;font-family:var(--serif);font-size:1.05rem;color:var(--ink);transition:.2s}
+  .chip:hover{border-color:var(--accent);color:var(--accent-dark);transform:translateY(-2px)}
+  .brands .note{text-align:center;color:var(--muted);margin-top:30px;font-weight:700;font-size:.92rem}
+
+  /* Visit / contact (the fix for tap-to-call + directions + hours) */
+  .visit{background:var(--ink);color:#f1ede4}
+  .visit .grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  .visit h2{color:#fff;font-size:clamp(1.9rem,3.6vw,2.6rem)}
+  .visit .eyebrow{color:#a7d58a}
+  .visit p.sub{color:#c9c3b6;margin-top:14px;font-size:1.04rem;max-width:40ch}
+  .visit .actions{display:flex;flex-direction:column;gap:12px;margin-top:28px;max-width:360px}
+  .vrow{display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:14px 16px;transition:.2s}
+  .vrow:hover{background:rgba(255,255,255,.12);transform:translateX(3px)}
+  .vrow .ic{width:40px;height:40px;flex:0 0 auto;border-radius:10px;background:var(--accent);display:flex;align-items:center;justify-content:center}
+  .vrow .ic svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:1.9}
+  .vrow .t small{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#a7d58a;font-weight:800}
+  .vrow .t b{font-size:1.04rem;color:#fff;font-weight:700}
+  .vrow.cta{background:var(--accent);border-color:var(--accent);justify-content:center}
+  .vrow.cta b{font-size:1.06rem}
+  .hours-card{background:var(--surface);color:var(--ink);border-radius:20px;padding:30px 30px 26px;box-shadow:var(--shadow)}
+  .hours-card h3{font-size:1.4rem;display:flex;align-items:center;gap:12px}
+  .hours-card .daisy{width:30px;height:30px}
+  .hours{list-style:none;margin-top:20px}
+  .hours li{display:flex;justify-content:space-between;gap:16px;padding:12px 0;border-bottom:1px solid var(--line);font-size:.98rem}
+  .hours li:last-child{border-bottom:0}
+  .hours li span:first-child{font-weight:700}
+  .hours li span:last-child{color:var(--muted);font-weight:600}
+  .hours-card .addr{margin-top:20px;font-size:.92rem;color:var(--muted);line-height:1.5}
+  .hours-card .addr b{color:var(--ink)}
+
+  /* Trust band (structural, honest) */
+  .trust{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .trust .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;padding:40px 20px}
+  .trust .item{text-align:center;padding:4px 8px}
+  .trust .item svg{width:30px;height:30px;stroke:var(--accent-dark);fill:none;stroke-width:1.7;margin:0 auto 10px}
+  .trust .item b{display:block;font-family:var(--serif);font-size:1.05rem}
+  .trust .item span{font-size:.85rem;color:var(--muted);font-weight:600}
+
+  /* Footer */
+  footer.site{background:var(--surface);border-top:1px solid var(--line);padding:56px 0 30px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+  .foot-brand .brand{margin-bottom:14px}
+  .foot-brand p{color:var(--muted);font-size:.94rem;max-width:34ch}
+  .foot-col h4{font-family:var(--sans);font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.76rem;color:var(--muted);margin-bottom:14px}
+  .foot-col a{display:block;color:var(--ink);font-weight:600;font-size:.95rem;padding:5px 0}
+  .foot-col a:hover{color:var(--accent-dark)}
+  .socials{display:flex;gap:10px;margin-top:16px}
+  .socials a{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:.2s}
+  .socials a:hover{background:var(--accent);border-color:var(--accent)}
+  .socials svg{width:18px;height:18px;fill:var(--ink);transition:.2s}
+  .socials a:hover svg{fill:#fff}
+  .foot-bottom{max-width:var(--maxw);margin:40px auto 0;padding:22px 20px 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.86rem}
+
+  /* Responsive */
+  @media (max-width:900px){
+    .hero .wrap,.about .grid,.visit .grid{grid-template-columns:1fr;gap:34px}
+    .hero-art{height:320px;order:-1}
+    .about-art{height:280px}
+    .cat-grid{grid-template-columns:repeat(2,1fr)}
+    .trust .wrap{grid-template-columns:repeat(2,1fr);gap:28px}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
+    .foot-brand{grid-column:1 / -1}
+  }
+  @media (max-width:640px){
+    .nav-links{
+      position:absolute;top:100%;left:0;right:0;
+      flex-direction:column;align-items:flex-start;gap:0;
+      background:var(--bg);border-bottom:1px solid var(--line);
+      max-height:0;overflow:hidden;transition:max-height .3s ease;padding:0 20px;
+    }
+    #nav-toggle:checked ~ .nav-links{max-height:360px;padding:10px 20px 18px}
+    .nav-links a{width:100%;padding:12px 0;border-bottom:1px solid var(--line)}
+    .nav-links .btn{margin-top:12px;width:100%}
+    .hamburger{display:flex}
+    .nav .btn.header-cta{display:none}
+    section{padding:56px 0}
+    .cat-grid{grid-template-columns:1fr}
+    .trust .wrap{grid-template-columns:1fr 1fr}
+    .utility .wrap{font-size:.78rem;gap:10px}
+    .hero .cta-row .btn{flex:1 1 100%}
+  }
+</style>
+</head>
+<body>
+
+<!-- reusable daisy symbol -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="daisy-sym" viewBox="0 0 100 100">
+    <circle class="bg" cx="50" cy="50" r="50"></circle>
+    <g>
+      <path class="petal" d="M50 14 C44 30 44 38 50 50 C56 38 56 30 50 14Z"></path>
+      <path class="petal" d="M50 86 C44 70 44 62 50 50 C56 62 56 70 50 86Z"></path>
+      <path class="petal" d="M14 50 C30 44 38 44 50 50 C38 56 30 56 14 50Z"></path>
+      <path class="petal" d="M86 50 C70 44 62 44 50 50 C62 56 70 56 86 50Z"></path>
+      <path class="petal" d="M24 24 C38 32 42 38 50 50 C38 42 32 38 24 24Z"></path>
+      <path class="petal" d="M76 76 C62 68 58 62 50 50 C62 58 68 62 76 76Z"></path>
+      <path class="petal" d="M76 24 C68 38 62 42 50 50 C62 42 68 38 76 24Z"></path>
+      <path class="petal" d="M24 76 C32 62 38 58 50 50 C38 58 32 62 24 76Z"></path>
+    </g>
+    <circle class="core" cx="50" cy="50" r="11"></circle>
+  </symbol>
+</svg>
+
+<!-- Utility bar: tap-to-call + directions fixed here -->
+<div class="utility">
+  <div class="wrap">
+    <a href="tel:+17079632154" aria-label="Call Daisy Clothing Boutique">
+      <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2.1z"/></svg>
+      (707) 963-2154
+    </a>
+    <span class="dot">|</span>
+    <a href="https://www.google.com/maps/search/?api=1&amp;query=Daisy%20Clothing%20Boutique%201332%20Main%20Street%20St%20Helena%20CA%2094574" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      1332 Main Street, St. Helena
+    </a>
+    <span class="dot">|</span>
+    <span>Open today 10 to 5</span>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site">
+  <div class="wrap">
+    <nav class="nav">
+      <a class="brand" href="#top" aria-label="Daisy Clothing Boutique home">
+        <svg class="daisy"><use href="#daisy-sym"></use></svg>
+        <span>
+          <span class="name">Daisy Clothing Boutique</span>
+          <span class="sub">St. Helena, Napa Valley</span>
+        </span>
+      </a>
+      <input type="checkbox" id="nav-toggle">
+      <label class="hamburger" for="nav-toggle" aria-label="Open menu"><span></span><span></span><span></span></label>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#shop">Shop</a>
+        <a href="#brands">Brands</a>
+        <a href="#visit">Visit</a>
+        <a class="btn btn-primary" href="#shop">Shop Online</a>
+      </div>
+      <a class="btn btn-primary header-cta" href="#shop">Shop Online</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Promo (real offer from site) -->
+<div class="promo">
+  <div class="wrap">Take 10% off your first order. Use code <code>FIRSTSHOP</code> at checkout.</div>
+</div>
+
+<!-- Hero -->
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">Women's clothing on Main Street</span>
+      <h1>Wine country style, <em>dressed by Daisy.</em></h1>
+      <p class="lead">A charming boutique in the heart of St. Helena, dressing you for work or play with pieces you will adore.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#shop">Shop Online</a>
+        <a class="btn btn-ghost" href="#visit">Visit the Store</a>
+      </div>
+      <p class="fineprint"><svg class="daisy"><use href="#daisy-sym"></use></svg> New deliveries arrive weekly.</p>
+    </div>
+    <div class="hero-art" aria-hidden="true">
+      <div class="grid">
+        <div class="tile g"></div><div class="tile"></div><div class="tile g"></div>
+        <div class="tile"></div><div class="tile"></div><div class="tile"></div>
+        <div class="tile g"></div><div class="tile"></div><div class="tile g"></div>
+      </div>
+      <div class="badge"><svg class="daisy"><use href="#daisy-sym"></use></svg></div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<section class="about" id="about">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="eyebrow">Welcome to Daisy</span>
+        <h2>Main Street charm, head to toe.</h2>
+        <p>Located on charming Main Street in St. Helena, the heart of the Napa Valley, Daisy caters to the casual wine country lifestyle. We love to dress you for work or play, plus lots of great accessories at prices you will adore.</p>
+        <p>From must have tops and dresses to jackets and jeans and so much more, Daisy has you covered. New deliveries arrive weekly, so there is always something fresh to discover.</p>
+        <div class="stats">
+          <div class="stat"><b>20 years</b><span>On Main Street in St. Helena</span></div>
+          <div class="stat"><b>Weekly</b><span>New arrivals in store</span></div>
+          <div class="stat"><b>Online &amp; in store</b><span>Shop whichever you like</span></div>
+        </div>
+      </div>
+      <div class="about-art" aria-hidden="true">
+        <div class="ring r1"></div>
+        <div class="ring r2"></div>
+        <div class="center"><svg class="daisy"><use href="#daisy-sym"></use></svg></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Shop / categories -->
+<section class="cats" id="shop">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">What we carry</span>
+      <h2>Something for every day in the valley</h2>
+      <p>Up to date, must have pieces and accessories, curated for the casual wine country lifestyle.</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat">
+        <div class="thumb c1"><svg viewBox="0 0 24 24"><path d="M4 7l4-3 4 3 4-3 4 3-2 3v10H6V10z"/></svg></div>
+        <div class="body"><h3>Tops &amp; Dresses</h3><p>Everyday favorites and weekend looks you will reach for again and again.</p></div>
+      </div>
+      <div class="cat">
+        <div class="thumb c2"><svg viewBox="0 0 24 24"><path d="M6 3l3 2h6l3-2 2 6-3 1v11H7V10L4 9z"/></svg></div>
+        <div class="body"><h3>Jackets &amp; Jeans</h3><p>Layers and denim that carry you from the shop to the vineyard.</p></div>
+      </div>
+      <div class="cat">
+        <div class="thumb c3"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M8 12l-3 9h14l-3-9"/></svg></div>
+        <div class="body"><h3>Jewelry</h3><p>Trend setting pieces from local artist Sherri Gallagher and handmade designs from Firefly.</p></div>
+      </div>
+      <div class="cat">
+        <div class="thumb c4"><svg viewBox="0 0 24 24"><path d="M6 8h12l1 12H5zM9 8a3 3 0 0 1 6 0"/></svg></div>
+        <div class="body"><h3>Handbags</h3><p>Leather handbags from Hobo and Liz Soto to finish any look.</p></div>
+      </div>
+      <div class="cat">
+        <div class="thumb c5"><svg viewBox="0 0 24 24"><path d="M4 6h16v4H4zM6 10v8h12v-8M9 4l3 2 3-2"/></svg></div>
+        <div class="body"><h3>Scarves, Hats &amp; Belts</h3><p>The accessories that complete your outfit, with something new all the time.</p></div>
+      </div>
+      <div class="cat">
+        <div class="thumb c6"><svg viewBox="0 0 24 24"><path d="M3 9h18v11H3zM3 9l3-5h12l3 5M12 4v16"/></svg></div>
+        <div class="body"><h3>Gift Cards</h3><p>Give the perfect gift. A Daisy gift card is always the right size.</p></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:40px">
+      <a class="btn btn-primary" href="#shop">Shop Online</a>
+      <a class="btn btn-gold" href="#visit" style="margin-left:10px">Gift Cards</a>
+    </div>
+  </div>
+</section>
+
+<!-- Brands -->
+<section class="brands" id="brands">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Brands we love</span>
+      <h2>Labels you will find at Daisy</h2>
+      <p>A rotating selection from our favorite lines, with new pieces arriving every week.</p>
+    </div>
+    <div class="brand-wall">
+      <span class="chip">Joseph Ribkoff</span>
+      <span class="chip">Habitat</span>
+      <span class="chip">Charlie B</span>
+      <span class="chip">Tribal</span>
+      <span class="chip">Aventura</span>
+      <span class="chip">XCVI</span>
+      <span class="chip">Sherri Gallagher</span>
+      <span class="chip">Firefly</span>
+      <span class="chip">Hobo</span>
+      <span class="chip">Liz Soto</span>
+    </div>
+    <p class="note">Our merchandise is always changing, so stop in often to see what is new.</p>
+  </div>
+</section>
+
+<!-- Trust band (structural, honest) -->
+<div class="trust">
+  <div class="wrap">
+    <div class="item">
+      <svg viewBox="0 0 24 24"><path d="M3 9h18v11H3zM3 9l3-5h12l3 5"/></svg>
+      <b>Shop online or in store</b><span>Browse from home or visit us</span>
+    </div>
+    <div class="item">
+      <svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>
+      <b>New arrivals weekly</b><span>Fresh deliveries all the time</span>
+    </div>
+    <div class="item">
+      <svg viewBox="0 0 24 24"><path d="M20 12v7H4v-7M2 7h20v5H2zM12 22V7M12 7S9 2 6 4s3 3 6 3zM12 7s3-5 6-3-3 3-6 3z"/></svg>
+      <b>Gift cards available</b><span>The perfect gift, any size</span>
+    </div>
+    <div class="item">
+      <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      <b>On Main Street</b><span>In the heart of St. Helena</span>
+    </div>
+  </div>
+</div>
+
+<!-- Visit: hours + tap-to-call + directions -->
+<section class="visit" id="visit">
+  <div class="wrap">
+    <div class="grid">
+      <div>
+        <span class="eyebrow">Come say hello</span>
+        <h2>Visit us on Main Street</h2>
+        <p class="sub">We would love to help you find something you adore. Call ahead or stop in during store hours.</p>
+        <div class="actions">
+          <a class="vrow cta" href="tel:+17079632154">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 1.9.6 2.8a2 2 0 0 1-.4 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.8.5 2.8.6a2 2 0 0 1 1.8 2.1z"/></svg></span>
+            <span class="t"><small>Tap to call</small><b>(707) 963-2154</b></span>
+          </a>
+          <a class="vrow" href="https://www.google.com/maps/search/?api=1&amp;query=Daisy%20Clothing%20Boutique%201332%20Main%20Street%20St%20Helena%20CA%2094574" target="_blank" rel="noopener">
+            <span class="ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
+            <span class="t"><small>Tap for directions</small><b>1332 Main Street, St. Helena</b></span>
+          </a>
+        </div>
+      </div>
+      <div class="hours-card">
+        <h3><svg class="daisy"><use href="#daisy-sym"></use></svg> Store Hours</h3>
+        <ul class="hours">
+          <li><span>Monday to Thursday</span><span>10:00am to 5:00pm</span></li>
+          <li><span>Friday &amp; Saturday</span><span>10:00am to 5:30pm</span></li>
+          <li><span>Sunday</span><span>10:30am to 5:00pm</span></li>
+        </ul>
+        <p class="addr"><b>Daisy Clothing Boutique</b><br>1332 Main Street<br>St. Helena, CA 94574</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Footer -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <a class="brand" href="#top">
+          <svg class="daisy"><use href="#daisy-sym"></use></svg>
+          <span>
+            <span class="name">Daisy Clothing Boutique</span>
+            <span class="sub">St. Helena, Napa Valley</span>
+          </span>
+        </a>
+        <p>Women's clothing and accessories for the casual wine country lifestyle, on Main Street in St. Helena.</p>
+        <div class="socials">
+          <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M14 9h3V6h-3c-1.7 0-3 1.3-3 3v2H9v3h2v6h3v-6h2.5l.5-3H14V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 8.5A3.5 3.5 0 1 0 12 15.5A3.5 3.5 0 0 0 12 8.5M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4m10.5 2.3a.9.9 0 1 0 0 1.8a.9.9 0 0 0 0-1.8"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="#about">About</a>
+        <a href="#shop">Shop Online</a>
+        <a href="#brands">Brands</a>
+        <a href="#visit">Visit Us</a>
+      </div>
+      <div class="foot-col">
+        <h4>Visit</h4>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Daisy%20Clothing%20Boutique%201332%20Main%20Street%20St%20Helena%20CA%2094574" target="_blank" rel="noopener">1332 Main Street<br>St. Helena, CA 94574</a>
+        <a href="tel:+17079632154">(707) 963-2154</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <span>Copyright 2026 Daisy Clothing Boutique. All rights reserved.</span>
+    <span>St. Helena, California</span>
+  </div>
+</footer>
+
+</body>
+</html>
